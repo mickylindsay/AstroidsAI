@@ -1,7 +1,6 @@
 package com.demisardonic.astroids.behavior.condition;
 
-import com.demisardonic.astroids.behavior.condition.AbstractCondition;
-import com.demisardonic.astroids.entity.Entity;
+import com.demisardonic.astroids.entity.PhysicsObject;
 
 public class NotCondition extends AbstractCondition {
     protected AbstractCondition condition;
@@ -10,7 +9,7 @@ public class NotCondition extends AbstractCondition {
     }
 
     @Override
-    public boolean actIf(Entity entity, Entity target) {
+    public boolean actIf(PhysicsObject entity, PhysicsObject target) {
         return !condition.actIf(entity, target);
     }
 }

@@ -1,8 +1,6 @@
 package com.demisardonic.astroids.behavior;
 
-import com.demisardonic.astroids.entity.Entity;
-
-import java.util.List;
+import com.demisardonic.astroids.entity.PhysicsObject;
 
 public class CompositeBehavior extends AbstractBehavior{
     protected AbstractBehavior[] behaviors;
@@ -11,7 +9,7 @@ public class CompositeBehavior extends AbstractBehavior{
     }
 
     @Override
-    public void act(Entity entity, Entity target) {
+    public void act(PhysicsObject entity, PhysicsObject target) {
         for(AbstractBehavior b : behaviors){
             b.act(entity, target);
         }

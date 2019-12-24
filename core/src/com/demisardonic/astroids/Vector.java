@@ -16,6 +16,7 @@ public class Vector {
     public Vector sub(Vector v) { return add(-v.x, -v.y); }
     public Vector scl(float s) { return new Vector(x * s, y * s); }
     public float mag() { return (float) Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)); }
+    public float dist(Vector v) { return (float) Math.sqrt(Math.pow(v.x-x, 2) + Math.pow(v.y-y, 2)); }
     public Vector nor(float f) {
         float mag = mag();
         if (mag == 0)

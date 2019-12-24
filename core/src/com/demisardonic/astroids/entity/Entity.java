@@ -6,19 +6,14 @@ import com.demisardonic.astroids.AssetManager;
 import com.demisardonic.astroids.Stage;
 import com.demisardonic.astroids.Vector;
 
-public class Entity {
+public class Entity extends PhysicsObject{
     protected final Texture texture;
     protected float scale, drag, speed;
-    public float rotation;
-    public Vector pos, vel, acc;
 
     public Entity(String key, float x, float y, float scale, float rotation){
+        super(x, y);
         texture = AssetManager.instance().texture(key);
-        pos = new Vector(x, y);
-        vel = new Vector(0, 0);
-        acc = new Vector(0, 0);
         this.scale = scale;
-        this.rotation = rotation;
         this.drag = 0.5f;
         this.speed = 100f;
     }
@@ -46,7 +41,7 @@ public class Entity {
     public boolean dead() { return false; }
 
     public Vector center() {
-        return pos.add(texture.getWidth()/2f, texture.getHeight()/2f);
+        return super.center().add(texture.getWidth()/2f, texture.getHeight()/2f);
     }
 
     protected void drawTexture(SpriteBatch batch, float x, float y, float scale, float rotation){

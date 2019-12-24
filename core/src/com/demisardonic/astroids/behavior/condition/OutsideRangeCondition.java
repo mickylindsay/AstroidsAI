@@ -1,7 +1,6 @@
 package com.demisardonic.astroids.behavior.condition;
 
-import com.demisardonic.astroids.behavior.condition.AbstractCondition;
-import com.demisardonic.astroids.entity.Entity;
+import com.demisardonic.astroids.entity.PhysicsObject;
 
 public class OutsideRangeCondition extends AbstractCondition {
     private float range;
@@ -11,7 +10,7 @@ public class OutsideRangeCondition extends AbstractCondition {
     }
 
     @Override
-    public boolean actIf(Entity entity, Entity target) {
+    public boolean actIf(PhysicsObject entity, PhysicsObject target) {
         float distance = target.center().sub(entity.center()).mag();
         return  distance > range;
     }

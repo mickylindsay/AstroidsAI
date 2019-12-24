@@ -1,7 +1,7 @@
 package com.demisardonic.astroids.behavior;
 
-import com.demisardonic.astroids.entity.Entity;
+import com.demisardonic.astroids.entity.PhysicsObject;
 
 public abstract class AbstractBehavior {
-    public abstract void act(Entity entity, Entity target);
+    public abstract void act(PhysicsObject entity, PhysicsObject target);
 }

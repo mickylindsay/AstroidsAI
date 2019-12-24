@@ -1,7 +1,7 @@
 package com.demisardonic.astroids.behavior;
 
 import com.demisardonic.astroids.behavior.condition.AbstractCondition;
-import com.demisardonic.astroids.entity.Entity;
+import com.demisardonic.astroids.entity.PhysicsObject;
 
 public class IfBehavior extends AbstractBehavior {
     protected AbstractCondition condition;
@@ -11,7 +11,7 @@ public class IfBehavior extends AbstractBehavior {
         this.behavior = behavior;
     }
     @Override
-    public void act(Entity entity, Entity target){
+    public void act(PhysicsObject entity, PhysicsObject target){
         if (condition.actIf(entity, target))
             behavior.act(entity, target);
     }

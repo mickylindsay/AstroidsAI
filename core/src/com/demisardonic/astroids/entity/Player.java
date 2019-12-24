@@ -9,19 +9,20 @@ import com.demisardonic.astroids.Vector;
 public class Player extends Entity{
 
     private final float THRUST, ROTATION;
+    private float baseDrag;
 
     public Player(float x, float y){
         super("entity.player", x, y, 1f, 0f);
         THRUST = 200f;
         ROTATION = 3f;
         this.speed = 300;
-        this.drag = 1f;
+        this.baseDrag = this.drag = 1f;
         System.out.println(pos);
     }
 
     @Override
     public void update(float dt) {
-        float drag = this.drag;
+        this.drag = this.baseDrag;
         if (Gdx.input.isKeyPressed(Input.Keys.A))
             rotation += ROTATION;
         if (Gdx.input.isKeyPressed(Input.Keys.D))
@@ -30,7 +31,7 @@ public class Player extends Entity{
             float dx = (float) (THRUST * Math.cos(Math.toRadians(rotation + 90)));
             float dy = (float) (THRUST * Math.sin(Math.toRadians(rotation + 90)));
             acc = acc.add(dx, dy);
-            drag = 0.2f; // Less drag when accelerating
+            this.drag = 0.2f; // Less drag when accelerating
         }
 
         super.update(dt);
