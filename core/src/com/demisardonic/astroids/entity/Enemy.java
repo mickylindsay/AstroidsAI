@@ -1,11 +1,14 @@
 package com.demisardonic.astroids.entity;
 
+import com.demisardonic.astroids.Collideable;
+import com.demisardonic.astroids.MainGame;
 import com.demisardonic.astroids.Stage;
 import com.demisardonic.astroids.Vector;
 import com.demisardonic.astroids.behavior.AbstractBehavior;
 
 public class Enemy extends Entity {
     private AbstractBehavior abstractBehavior;
+    private boolean dead;
 
     public Enemy(float x, float y, AbstractBehavior abstractBehavior){
         super("entity.enemy", x, y, 1f, 0f);
@@ -14,8 +17,18 @@ public class Enemy extends Entity {
 
     @Override
     public void update(float dt) {
-        abstractBehavior.act(this, Stage.player);
+        abstractBehavior.act(this, MainGame.stage.player());
         super.update(dt);
+    }
 
+    public void collide(Collideable collideable) {
+        collideable.collide(this);
+    }
+
+    public void collide(Shot s) {
+        if (this != s.getOwner()) {
+            this.kill();
+            s.kill();
+        }
     }
 }

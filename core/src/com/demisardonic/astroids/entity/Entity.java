@@ -3,12 +3,14 @@ package com.demisardonic.astroids.entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.demisardonic.astroids.AssetManager;
-import com.demisardonic.astroids.Stage;
+import com.demisardonic.astroids.Collideable;
 import com.demisardonic.astroids.Vector;
 
-public class Entity extends PhysicsObject{
+public abstract class Entity extends PhysicsObject implements Collideable {
     protected final Texture texture;
     protected float scale, drag, speed;
+    protected boolean dead;
+    private float radius;
 
     public Entity(String key, float x, float y, float scale, float rotation){
         super(x, y);
@@ -16,6 +18,8 @@ public class Entity extends PhysicsObject{
         this.scale = scale;
         this.drag = 0.5f;
         this.speed = 100f;
+        this.dead = false;
+        this.radius = texture.getWidth() / 2f; //TODO better sphere bounds per entity
     }
 
     public void update(float dt) {
@@ -38,13 +42,23 @@ public class Entity extends PhysicsObject{
 
     public void dispose() { }
 
-    public boolean dead() { return false; }
+    public boolean dead() { return dead; }
+
+    public void kill() { dead = true; }
 
     public Vector center() {
         return super.center().add(texture.getWidth()/2f, texture.getHeight()/2f);
     }
 
+    public float radius() { return radius; }
+
     protected void drawTexture(SpriteBatch batch, float x, float y, float scale, float rotation){
         batch.draw(texture, x, y, texture.getWidth()/2f*scale, texture.getHeight()/2f*scale, texture.getWidth() * scale, texture.getHeight() * scale, 1, 1, rotation, 0, 0, texture.getWidth(), texture.getHeight(), false,false);
     }
+
+    public abstract void collide(Collideable collideable);
+
+    public void collide(Player p) { }
+    public void collide(Shot s) { }
+    public void collide(Enemy e) { }
 }

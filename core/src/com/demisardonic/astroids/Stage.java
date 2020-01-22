@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class Stage {
     private Set<Entity> entities;
-    public static Entity player;
+    public Entity player;
     private List<Entity> toKill;
 
     public Stage(){
@@ -29,9 +29,21 @@ public class Stage {
     }
 
     public void update(float dt){
+        // Collision
+        for (Entity e : entities) {
+            //TODO Quadtree collision
+            for (Entity e2 : entities) {
+                if (e == e2) continue;
+                float dist = e.center().dist(e2.center());
+                float rad = e.radius() + e2.radius();
+                if ( dist < rad ){
+                    e.collide(e2);
+                }
+            }
+        }
         for (Entity e : entities){
             e.update(dt);
-            if(e.dead()){
+            if (e.dead()){
                 toKill.add(e);
             }
         }
@@ -49,5 +61,9 @@ public class Stage {
 
     public Entity player() {
         return player;
+    }
+
+    public void spawn(Entity e) {
+        entities.add(e);
     }
 }

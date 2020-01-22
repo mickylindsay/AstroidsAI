@@ -1,6 +1,7 @@
 package com.demisardonic.astroids;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,10 +26,19 @@ public class AssetManager {
     public Texture texture(String key) {
         if (!textures.containsKey(key)) {
             String path = key;
+            // TODO logging for missing textures
             if (paths.containsKey(key))
                 path = paths.get(key);
-            // TODO: Error handling for missing asset
-            textures.put(key, new Texture(path));
+            else
+                // Default texture when texture key is not registered
+                return texture("default");
+            try {
+                textures.put(key, new Texture(path));
+            } catch (GdxRuntimeException e) {
+                // Default texture when png is missing.
+                return texture("default");
+            }
+
         }
         return textures.get(key);
     }

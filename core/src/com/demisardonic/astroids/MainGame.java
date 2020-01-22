@@ -14,13 +14,14 @@ import java.util.List;
 
 public class MainGame extends ApplicationAdapter {
 	SpriteBatch batch;
-	Stage stage;
+	public static Stage stage;
 	
 	@Override
 	public void create () {
 		AssetManager.instance().registerPath("default", "img/default.png");
 		AssetManager.instance().registerPath("entity.player", "img/player.png");
 		AssetManager.instance().registerPath("entity.enemy", "img/enemy.png");
+		AssetManager.instance().registerPath("entity.shot", "img/shot.png");
 
 		batch = new SpriteBatch();
 		stage = new Stage();

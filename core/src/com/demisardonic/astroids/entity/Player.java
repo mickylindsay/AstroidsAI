@@ -3,13 +3,17 @@ package com.demisardonic.astroids.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.demisardonic.astroids.Stage;
-import com.demisardonic.astroids.Vector;
+import com.demisardonic.astroids.Collideable;
+import com.demisardonic.astroids.MainGame;
+import com.demisardonic.astroids.Weapon;
 
 public class Player extends Entity{
-
     private final float THRUST, ROTATION;
     private float baseDrag;
+    private float shotCooldown;
+    private float shotSpeed;
+
+    private Weapon weapon;
 
     public Player(float x, float y){
         super("entity.player", x, y, 1f, 0f);
@@ -17,11 +21,18 @@ public class Player extends Entity{
         ROTATION = 3f;
         this.speed = 300;
         this.baseDrag = this.drag = 1f;
-        System.out.println(pos);
+        this.shotSpeed = 0.05f;
+        this.shotCooldown = 0;
+        this.weapon = new Weapon();
     }
 
     @Override
     public void update(float dt) {
+        // shooting
+        weapon.tick(dt);
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) weapon.shoot(this);
+
+        // moving
         this.drag = this.baseDrag;
         if (Gdx.input.isKeyPressed(Input.Keys.A))
             rotation += ROTATION;
@@ -36,7 +47,7 @@ public class Player extends Entity{
 
         super.update(dt);
 
-        // Bound position and rotation within screen and 360 degrees
+        // Bound position and rotation within screen
         if (pos.x() < -(texture.getWidth()/2f)) pos = pos.add(Gdx.graphics.getWidth(), 0);
         if (pos.x() > Gdx.graphics.getWidth() - (texture.getWidth()/2f)) pos = pos.add(-Gdx.graphics.getWidth(), 0);
         if (pos.y() < -(texture.getHeight()/2f)) pos = pos.add(0, Gdx.graphics.getHeight());
@@ -51,5 +62,9 @@ public class Player extends Entity{
                 drawTexture(batch, pos.x() + Gdx.graphics.getWidth()*c, pos.y()+ Gdx.graphics.getHeight()*r, scale, rotation);
             }
         }
+    }
+
+    public void collide(Collideable collideable) {
+        collideable.collide(this);
     }
 }
