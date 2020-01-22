@@ -4,17 +4,12 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.demisardonic.astroids.entity.Enemy;
-import com.demisardonic.astroids.entity.Entity;
-import com.demisardonic.astroids.entity.Player;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainGame extends ApplicationAdapter {
-	SpriteBatch batch;
 	public static Stage stage;
+	private Renderer renderer;
+
+	public static boolean renderCollision = false;
 	
 	@Override
 	public void create () {
@@ -22,8 +17,7 @@ public class MainGame extends ApplicationAdapter {
 		AssetManager.instance().registerPath("entity.player", "img/player.png");
 		AssetManager.instance().registerPath("entity.enemy", "img/enemy.png");
 		AssetManager.instance().registerPath("entity.shot", "img/shot.png");
-
-		batch = new SpriteBatch();
+		renderer = new Renderer();
 		stage = new Stage();
 	}
 
@@ -34,20 +28,22 @@ public class MainGame extends ApplicationAdapter {
 			System.exit(0);
 		}
 
+		if (Gdx.input.isKeyJustPressed(Input.Keys.F1)) renderCollision = ! renderCollision;
+
 		float dt = Gdx.graphics.getDeltaTime();
 
 		stage.update(dt);
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		stage.render(batch, dt);
-		batch.end();
+
+		stage.render(renderer, dt);
+		renderer.close();
 	}
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
+		renderer.dispose();
 		AssetManager.instance().dispose();
 	}
 }

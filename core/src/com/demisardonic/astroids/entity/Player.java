@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.demisardonic.astroids.Collideable;
 import com.demisardonic.astroids.MainGame;
+import com.demisardonic.astroids.Renderer;
 import com.demisardonic.astroids.Weapon;
 
 public class Player extends Entity{
@@ -56,12 +57,14 @@ public class Player extends Entity{
     }
 
     @Override
-    public void render(SpriteBatch batch, float dt){
+    public void render(Renderer renderer, float dt){
         for (int c = -1; c <= 1 ; c++) {
             for (int r = -1; r <= 1; r++) {
-                drawTexture(batch, pos.x() + Gdx.graphics.getWidth()*c, pos.y()+ Gdx.graphics.getHeight()*r, scale, rotation);
+                if (c == 0 && r == 0) continue;
+                renderer.renderSprite(texture, pos.x() + Gdx.graphics.getWidth()*c, pos.y()+ Gdx.graphics.getHeight()*r, scale, rotation);
             }
         }
+        super.render(renderer, dt);
     }
 
     public void collide(Collideable collideable) {

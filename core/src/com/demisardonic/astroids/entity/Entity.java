@@ -2,15 +2,13 @@ package com.demisardonic.astroids.entity;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.demisardonic.astroids.AssetManager;
-import com.demisardonic.astroids.Collideable;
-import com.demisardonic.astroids.Vector;
+import com.demisardonic.astroids.*;
 
 public abstract class Entity extends PhysicsObject implements Collideable {
     protected final Texture texture;
     protected float scale, drag, speed;
     protected boolean dead;
-    private float radius;
+    protected float radius;
 
     public Entity(String key, float x, float y, float scale, float rotation){
         super(x, y);
@@ -36,8 +34,10 @@ public abstract class Entity extends PhysicsObject implements Collideable {
         if (rotation < 0f) rotation += 360f;
     }
 
-    public void render(SpriteBatch batch, float dt){
-       drawTexture(batch, pos.x(), pos.y(), scale, rotation);
+    public void render(Renderer renderer, float dt){
+       renderer.renderSprite(texture, pos.x(), pos.y(), scale, rotation);
+       if (MainGame.renderCollision)
+           renderer.renderCircle(center().x(), center().y(), radius);
     }
 
     public void dispose() { }
@@ -51,10 +51,6 @@ public abstract class Entity extends PhysicsObject implements Collideable {
     }
 
     public float radius() { return radius; }
-
-    protected void drawTexture(SpriteBatch batch, float x, float y, float scale, float rotation){
-        batch.draw(texture, x, y, texture.getWidth()/2f*scale, texture.getHeight()/2f*scale, texture.getWidth() * scale, texture.getHeight() * scale, 1, 1, rotation, 0, 0, texture.getWidth(), texture.getHeight(), false,false);
-    }
 
     public abstract void collide(Collideable collideable);
 

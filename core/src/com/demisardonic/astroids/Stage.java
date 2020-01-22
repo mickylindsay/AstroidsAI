@@ -51,12 +51,12 @@ public class Stage {
         entities.removeAll(toKill);
     }
 
-    public void render(SpriteBatch batch, float dt){
+    public void render(Renderer renderer, float dt){
         for (Entity e : entities){
-            e.render(batch, dt);
+            e.render(renderer, dt);
         }
 
-        player.render(batch, dt);
+        player.render(renderer, dt);
     }
 
     public Entity player() {
