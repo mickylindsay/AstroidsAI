@@ -11,8 +11,6 @@ import com.demisardonic.astroids.Weapon;
 public class Player extends Entity{
     private final float THRUST, ROTATION;
     private float baseDrag;
-    private float shotCooldown;
-    private float shotSpeed;
 
     private Weapon weapon;
 
@@ -22,8 +20,6 @@ public class Player extends Entity{
         ROTATION = 3f;
         this.speed = 300;
         this.baseDrag = this.drag = 1f;
-        this.shotSpeed = 0.05f;
-        this.shotCooldown = 0;
         this.weapon = new Weapon();
     }
 
@@ -58,6 +54,7 @@ public class Player extends Entity{
 
     @Override
     public void render(Renderer renderer, float dt){
+        // Render multiple players to handle edge overlap
         for (int c = -1; c <= 1 ; c++) {
             for (int r = -1; r <= 1; r++) {
                 if (c == 0 && r == 0) continue;

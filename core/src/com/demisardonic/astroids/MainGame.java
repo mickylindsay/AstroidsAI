@@ -23,6 +23,7 @@ public class MainGame extends ApplicationAdapter {
 
 	@Override
 	public void render () {
+		Gdx.graphics.setTitle("" + Gdx.graphics.getFramesPerSecond());
 		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
 			Gdx.app.exit();
 			System.exit(0);

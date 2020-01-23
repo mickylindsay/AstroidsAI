@@ -8,10 +8,7 @@ import com.demisardonic.astroids.entity.Enemy;
 import com.demisardonic.astroids.entity.Entity;
 import com.demisardonic.astroids.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Stage {
     private Set<Entity> entities;
@@ -25,14 +22,20 @@ public class Stage {
         entities.add(new Enemy(300, 100, new CompositeBehavior(new FacingBehavior(),
                 new IfElseBehavior(new InsideRangeCondition(100f), new HaltBehavior(), new SeekBehavior()))));
         entities.add(new Enemy(500, 100, new CompositeBehavior(new FacingBehavior(), new KeepDistanceBehavior(100f))));
+        Random rand = new Random();
+        for (int i = 0; i < 2000; i++) {
+
+            entities.add(new Enemy(rand.nextFloat()*Gdx.graphics.getWidth(), rand.nextFloat()*Gdx.graphics.getHeight(), new CompositeBehavior(new FacingBehavior(), new KeepDistanceBehavior(100f))));
+        }
         toKill = new ArrayList<Entity>();
     }
 
     public void update(float dt){
+        QuadTree<Entity> quadTree = new QuadTree<Entity>(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        for (Entity e : entities) quadTree.insert(e);
         // Collision
         for (Entity e : entities) {
-            //TODO Quadtree collision
-            for (Entity e2 : entities) {
+            for (Entity e2 : entities /* TODO query quadtree */) {
                 if (e == e2) continue;
                 float dist = e.center().dist(e2.center());
                 float rad = e.radius() + e2.radius();
@@ -41,6 +44,7 @@ public class Stage {
                 }
             }
         }
+
         for (Entity e : entities){
             e.update(dt);
             if (e.dead()){
