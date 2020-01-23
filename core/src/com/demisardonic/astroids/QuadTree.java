@@ -52,6 +52,16 @@ public class QuadTree<N extends PhysicsObject> {
         return values;
     }
 
+    public void render(Renderer renderer){
+        renderer.renderRect(x, y, w, h);
+        if (divide){
+            topLeft.render(renderer);
+            topRight.render(renderer);
+            bottomLeft.render(renderer);
+            bottomRight.render(renderer);
+        }
+    }
+
     private void queryReq(float x, float y, float r, List<N> retValues) {
         if(intersectsCircle(x,y,r)) retValues.addAll(values);
         if(divide) {
@@ -82,15 +92,4 @@ public class QuadTree<N extends PhysicsObject> {
         float dy = distY - h / 2;
         return (dx * dx + dy * dy <= r * r);
     }
-
-    public void render(Renderer renderer){
-        renderer.renderRect(x, y, w, h);
-        if (divide){
-            topLeft.render(renderer);
-            topRight.render(renderer);
-            bottomLeft.render(renderer);
-            bottomRight.render(renderer);
-        }
-    }
-
 }

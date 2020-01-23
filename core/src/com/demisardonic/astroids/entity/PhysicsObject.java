@@ -7,11 +7,11 @@ public class PhysicsObject {
     public Vector pos, vel, acc;
 
     public PhysicsObject(){
-        this(0, 0);
+        this(0f, 0f, 0f);
     }
 
-    public PhysicsObject(float x, float y) {
-        this(new Vector(x, y), new Vector(0, 0), new Vector(0, 0), 0f);
+    public PhysicsObject(float x, float y, float r) {
+        this(new Vector(x, y), new Vector(0, 0), new Vector(0, 0), r);
     }
 
     public PhysicsObject(Vector pos, Vector vel, Vector acc, float rotation){

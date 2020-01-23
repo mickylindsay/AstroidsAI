@@ -8,7 +8,7 @@ public class Shot extends Entity {
     private Entity owner;
 
     public Shot(Entity owner) {
-        super("entity.shot", owner.center().x(), owner.center().y(), 1f,  owner.rotation);
+        super("entity.shot", owner.center().x(), owner.center().y(), 1f, owner.rotation);
         this.drag = 0f;
         this.speed = 500f;
 
@@ -18,7 +18,7 @@ public class Shot extends Entity {
         this.vel = v.scl(this.speed);
 
         //Shift shot pos by its exture width and place it in front of the owner
-        this.pos = this.pos.sub(texture.getWidth() / 2, texture.getHeight() / 2).add(v.scl(owner.texture.getWidth() / 2));
+        this.pos = this.pos.sub(texture.getWidth() / 2f, texture.getHeight() / 2f).add(v.scl(owner.texture.getWidth() / 2f));
         this.owner = owner;
     }
 

@@ -23,7 +23,6 @@ public class Vector {
             return new Vector(0, 0);
         return scl(f/mag());
     }
-    public Vector nor() { return nor(1f); }
     public Vector trunk(float m) {
         if (mag() > m) return nor(m);
         return this;

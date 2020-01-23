@@ -15,29 +15,32 @@ public class Stage {
 
     public Stage(){
         player = new Player(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
-        entities = new HashSet<Entity>();
+        entities = new HashSet<>();
         Random rand = new Random();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10; i++) {
             entities.add(new Enemy(rand.nextFloat()*Gdx.graphics.getWidth(), rand.nextFloat()*Gdx.graphics.getHeight()));
         }
-        toKill = new ArrayList<Entity>();
+        toKill = new ArrayList<>();
     }
 
     public void update(float dt){
-        quadTree = new QuadTree<Entity>(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        // Generate the quad tree and find largest radius
+        // used to reduce number of possible collisions that need to be calculated
+        quadTree = new QuadTree<>(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         float maxEntityRadius = 0;
         for (Entity e : entities) {
             if (e.radius() > maxEntityRadius)
                 maxEntityRadius = e.radius();
             quadTree.insert(e);
         }
+
         // Collision
         for (Entity e : entities) {
+            // Max distance that needs to be queried is this entities radius plus
+            // the largest radius that could cause an collision (the largest collision radius being rendered)
             for (Entity e2 : quadTree.query(e.pos.x(), e.pos.y(), maxEntityRadius + e.radius())) {
                 if (e == e2) continue;
-                float dist = e.center().dist(e2.center());
-                float rad = e.radius() + e2.radius();
-                if ( dist < rad ){
+                if ( e.center().dist(e2.center()) < e.radius() + e2.radius() ){
                     e.collide(e2);
                 }
             }

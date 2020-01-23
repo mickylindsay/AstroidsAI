@@ -1,7 +1,6 @@
 package com.demisardonic.astroids.entity;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.demisardonic.astroids.*;
 
 public abstract class Entity extends PhysicsObject implements Collideable {
@@ -11,7 +10,7 @@ public abstract class Entity extends PhysicsObject implements Collideable {
     protected float radius;
 
     public Entity(String key, float x, float y, float scale, float rotation){
-        super(x, y);
+        super(x, y, rotation);
         texture = AssetManager.instance().texture(key);
         this.scale = scale;
         this.drag = 0.5f;

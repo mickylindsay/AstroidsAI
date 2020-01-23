@@ -2,13 +2,10 @@ package com.demisardonic.astroids.entity;
 
 import com.demisardonic.astroids.Collideable;
 import com.demisardonic.astroids.MainGame;
-import com.demisardonic.astroids.Stage;
-import com.demisardonic.astroids.Vector;
 import com.demisardonic.astroids.behavior.AbstractBehavior;
 
 public class Enemy extends Entity {
     private AbstractBehavior abstractBehavior;
-    private boolean dead;
 
     public Enemy(float x, float y){
         this(x, y, null);

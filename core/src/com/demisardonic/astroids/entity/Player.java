@@ -2,9 +2,7 @@ package com.demisardonic.astroids.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.demisardonic.astroids.Collideable;
-import com.demisardonic.astroids.MainGame;
 import com.demisardonic.astroids.Renderer;
 import com.demisardonic.astroids.Weapon;
 
