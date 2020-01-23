@@ -35,36 +35,40 @@ public class Renderer {
         spriteBatch.draw(texture, x, y, texture.getWidth()/2f*scale, texture.getHeight()/2f*scale, texture.getWidth() * scale, texture.getHeight() * scale, 1, 1, rotation, 0, 0, texture.getWidth(), texture.getHeight(), false,false);
     }
 
-    public void renderCircle(float x, float y, float radius) {
+    public void prepShapeRenderer(){
         if (shapeType != ShapeRenderer.ShapeType.Line) {
             if (shapeType != null)
                 shapeRenderer.end();
             shapeType = ShapeRenderer.ShapeType.Line;
             shapeRenderer.begin(shapeType);
         }
-        shapeRenderer.setColor(1, 1, 0, 1); //TODO allow for unique color
+    }
+
+    public void setShapeColor(float r, float g, float b, float a) {
+        prepShapeRenderer();
+        shapeRenderer.setColor(r, g, b, a);
+    }
+
+    public void renderCircle(float x, float y, float radius) {
+        prepShapeRenderer();
         shapeRenderer.circle(x, y, radius);
     }
 
     public void renderRect(float x, float y, float w, float h) {
-        if (shapeType != ShapeRenderer.ShapeType.Line) {
-            if (shapeType != null)
-                shapeRenderer.end();
-            shapeType = ShapeRenderer.ShapeType.Line;
-            shapeRenderer.begin(shapeType);
-        }
-        shapeRenderer.setColor(1, 1, 0, 1); //TODO allow for unique color
+        prepShapeRenderer();
         shapeRenderer.rect(x, y, w, h);
     }
 
-    // TODO render line for debug entity acceleration
+    public void renderLine(float x, float y, float x2, float y2) {
+        prepShapeRenderer();
+        shapeRenderer.line(x, y, x+x2/4, y+y2/4);
+    }
 
     public void close() {
         if (openSprite) {
             openSprite = false;
             spriteBatch.end();
         }
-
         if (shapeType != null) {
             shapeType = null;
             shapeRenderer.end();

@@ -37,6 +37,8 @@ public abstract class Entity extends PhysicsObject implements Collideable {
        renderer.renderSprite(texture, pos.x(), pos.y(), scale, rotation);
        if (MainGame.renderCollision)
            renderer.renderCircle(center().x(), center().y(), radius);
+       if (MainGame.renderAcceleration)
+           renderer.renderLine(center().x(), center().y(), vel.x(), vel.y());
     }
 
     public void dispose() { }

@@ -1,6 +1,9 @@
 package com.demisardonic.astroids;
 
 import com.badlogic.gdx.Gdx;
+import com.demisardonic.astroids.behavior.CompositeBehavior;
+import com.demisardonic.astroids.behavior.FacingBehavior;
+import com.demisardonic.astroids.behavior.KeepDistanceBehavior;
 import com.demisardonic.astroids.entity.Enemy;
 import com.demisardonic.astroids.entity.Entity;
 import com.demisardonic.astroids.entity.Player;
@@ -18,7 +21,8 @@ public class Stage {
         entities = new HashSet<>();
         Random rand = new Random();
         for (int i = 0; i < 10; i++) {
-            entities.add(new Enemy(rand.nextFloat()*Gdx.graphics.getWidth(), rand.nextFloat()*Gdx.graphics.getHeight()));
+            entities.add(new Enemy(rand.nextFloat()*Gdx.graphics.getWidth(), rand.nextFloat()*Gdx.graphics.getHeight(),
+                    new CompositeBehavior(new FacingBehavior(), new KeepDistanceBehavior(50f))));
         }
         toKill = new ArrayList<>();
     }

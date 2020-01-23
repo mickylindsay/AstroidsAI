@@ -11,6 +11,7 @@ public class MainGame extends ApplicationAdapter {
 
 	public static boolean renderCollision = false;
 	public static boolean renderQuadTree = false;
+	public static boolean renderAcceleration = false;
 	
 	@Override
 	public void create () {
@@ -32,6 +33,7 @@ public class MainGame extends ApplicationAdapter {
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.F1)) renderCollision = !renderCollision;
 		if (Gdx.input.isKeyJustPressed(Input.Keys.F2)) renderQuadTree = !renderQuadTree;
+		if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) renderAcceleration = !renderAcceleration;
 
 		float dt = Gdx.graphics.getDeltaTime();
 
