@@ -10,6 +10,7 @@ public class MainGame extends ApplicationAdapter {
 	private Renderer renderer;
 
 	public static boolean renderCollision = false;
+	public static boolean renderQuadTree = false;
 	
 	@Override
 	public void create () {
@@ -29,7 +30,8 @@ public class MainGame extends ApplicationAdapter {
 			System.exit(0);
 		}
 
-		if (Gdx.input.isKeyJustPressed(Input.Keys.F1)) renderCollision = ! renderCollision;
+		if (Gdx.input.isKeyJustPressed(Input.Keys.F1)) renderCollision = !renderCollision;
+		if (Gdx.input.isKeyJustPressed(Input.Keys.F2)) renderQuadTree = !renderQuadTree;
 
 		float dt = Gdx.graphics.getDeltaTime();
 

@@ -1,9 +1,6 @@
 package com.demisardonic.astroids;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.demisardonic.astroids.behavior.*;
-import com.demisardonic.astroids.behavior.condition.InsideRangeCondition;
 import com.demisardonic.astroids.entity.Enemy;
 import com.demisardonic.astroids.entity.Entity;
 import com.demisardonic.astroids.entity.Player;
@@ -14,28 +11,29 @@ public class Stage {
     private Set<Entity> entities;
     public Entity player;
     private List<Entity> toKill;
+    private QuadTree<Entity> quadTree;
 
     public Stage(){
         player = new Player(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
         entities = new HashSet<Entity>();
-        entities.add(new Enemy(200, 200, new CompositeBehavior(new FacingBehavior(), new ArriveBehavior(100f))));
-        entities.add(new Enemy(300, 100, new CompositeBehavior(new FacingBehavior(),
-                new IfElseBehavior(new InsideRangeCondition(100f), new HaltBehavior(), new SeekBehavior()))));
-        entities.add(new Enemy(500, 100, new CompositeBehavior(new FacingBehavior(), new KeepDistanceBehavior(100f))));
         Random rand = new Random();
-        for (int i = 0; i < 2000; i++) {
-
-            entities.add(new Enemy(rand.nextFloat()*Gdx.graphics.getWidth(), rand.nextFloat()*Gdx.graphics.getHeight(), new CompositeBehavior(new FacingBehavior(), new KeepDistanceBehavior(100f))));
+        for (int i = 0; i < 1000; i++) {
+            entities.add(new Enemy(rand.nextFloat()*Gdx.graphics.getWidth(), rand.nextFloat()*Gdx.graphics.getHeight()));
         }
         toKill = new ArrayList<Entity>();
     }
 
     public void update(float dt){
-        QuadTree<Entity> quadTree = new QuadTree<Entity>(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        for (Entity e : entities) quadTree.insert(e);
+        quadTree = new QuadTree<Entity>(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        float maxEntityRadius = 0;
+        for (Entity e : entities) {
+            if (e.radius() > maxEntityRadius)
+                maxEntityRadius = e.radius();
+            quadTree.insert(e);
+        }
         // Collision
         for (Entity e : entities) {
-            for (Entity e2 : entities /* TODO query quadtree */) {
+            for (Entity e2 : quadTree.query(e.pos.x(), e.pos.y(), maxEntityRadius + e.radius())) {
                 if (e == e2) continue;
                 float dist = e.center().dist(e2.center());
                 float rad = e.radius() + e2.radius();
@@ -59,8 +57,8 @@ public class Stage {
         for (Entity e : entities){
             e.render(renderer, dt);
         }
-
         player.render(renderer, dt);
+        if (MainGame.renderQuadTree) quadTree.render(renderer);
     }
 
     public Entity player() {

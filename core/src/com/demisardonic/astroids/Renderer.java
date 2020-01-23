@@ -46,6 +46,17 @@ public class Renderer {
         shapeRenderer.circle(x, y, radius);
     }
 
+    public void renderRect(float x, float y, float w, float h) {
+        if (shapeType != ShapeRenderer.ShapeType.Line) {
+            if (shapeType != null)
+                shapeRenderer.end();
+            shapeType = ShapeRenderer.ShapeType.Line;
+            shapeRenderer.begin(shapeType);
+        }
+        shapeRenderer.setColor(1, 1, 0, 1); //TODO allow for unique color
+        shapeRenderer.rect(x, y, w, h);
+    }
+
     // TODO render line for debug entity acceleration
 
     public void close() {
