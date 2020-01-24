@@ -3,7 +3,7 @@ package com.demisardonic.astroids;
 import com.badlogic.gdx.Gdx;
 import com.demisardonic.astroids.behavior.CompositeBehavior;
 import com.demisardonic.astroids.behavior.FacingBehavior;
-import com.demisardonic.astroids.behavior.KeepDistanceBehavior;
+import com.demisardonic.astroids.behavior.SeekBehavior;
 import com.demisardonic.astroids.entity.Enemy;
 import com.demisardonic.astroids.entity.Entity;
 import com.demisardonic.astroids.entity.Player;
@@ -14,17 +14,20 @@ public class Stage {
     private Set<Entity> entities;
     public Entity player;
     private List<Entity> toKill;
+    private List<Entity> toAdd;
     private QuadTree<Entity> quadTree;
 
     public Stage(){
         player = new Player(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
         entities = new HashSet<>();
+        entities.add(player);
         Random rand = new Random();
         for (int i = 0; i < 10; i++) {
             entities.add(new Enemy(rand.nextFloat()*Gdx.graphics.getWidth(), rand.nextFloat()*Gdx.graphics.getHeight(),
-                    new CompositeBehavior(new FacingBehavior(), new KeepDistanceBehavior(50f))));
+                    new CompositeBehavior(new FacingBehavior(), new SeekBehavior())));
         }
         toKill = new ArrayList<>();
+        toAdd = new ArrayList<>();
     }
 
     public void update(float dt){
@@ -56,15 +59,16 @@ public class Stage {
                 toKill.add(e);
             }
         }
-        player.update(dt);
         entities.removeAll(toKill);
+        toKill.clear();
+        entities.addAll(toAdd);
+        toAdd.clear();
     }
 
     public void render(Renderer renderer, float dt){
         for (Entity e : entities){
             e.render(renderer, dt);
         }
-        player.render(renderer, dt);
         if (MainGame.renderQuadTree) quadTree.render(renderer);
     }
 
@@ -73,6 +77,6 @@ public class Stage {
     }
 
     public void spawn(Entity e) {
-        entities.add(e);
+        toAdd.add(e);
     }
 }
