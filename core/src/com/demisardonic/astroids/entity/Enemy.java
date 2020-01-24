@@ -3,12 +3,13 @@ package com.demisardonic.astroids.entity;
 import com.demisardonic.astroids.Collideable;
 import com.demisardonic.astroids.MainGame;
 import com.demisardonic.astroids.behavior.AbstractBehavior;
+import com.demisardonic.astroids.behavior.NullBehavior;
 
 public class Enemy extends Entity {
     private AbstractBehavior abstractBehavior;
 
     public Enemy(float x, float y){
-        this(x, y, null);
+        this(x, y, new NullBehavior());
     }
 
     public Enemy(float x, float y, AbstractBehavior abstractBehavior){
@@ -18,8 +19,7 @@ public class Enemy extends Entity {
 
     @Override
     public void update(float dt) {
-        if (abstractBehavior != null)
-            abstractBehavior.act(this, MainGame.stage.player());
+        abstractBehavior.act(this, MainGame.stage.player());
         super.update(dt);
     }
 
@@ -32,5 +32,9 @@ public class Enemy extends Entity {
             this.kill();
             s.kill();
         }
+    }
+
+    public void collide(Player p) {
+        this.kill();
     }
 }

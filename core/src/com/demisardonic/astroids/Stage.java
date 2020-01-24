@@ -23,8 +23,7 @@ public class Stage {
         entities.add(player);
         Random rand = new Random();
         for (int i = 0; i < 10; i++) {
-            entities.add(new Enemy(rand.nextFloat()*Gdx.graphics.getWidth(), rand.nextFloat()*Gdx.graphics.getHeight(),
-                    new CompositeBehavior(new FacingBehavior(), new SeekBehavior())));
+            entities.add(new Enemy(rand.nextFloat()*Gdx.graphics.getWidth(), rand.nextFloat()*Gdx.graphics.getHeight()));
         }
         toKill = new ArrayList<>();
         toAdd = new ArrayList<>();
