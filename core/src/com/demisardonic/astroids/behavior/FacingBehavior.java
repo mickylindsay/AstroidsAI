@@ -10,13 +10,13 @@ public class FacingBehavior extends AbstractBehavior {
         Vector targetPos = target.center().sub(entity.center());
         float desired = (float) (Math.toDegrees(Math.atan((targetPos.y()/targetPos.x()))));
         desired += targetPos.x() > 0 ? 270f : 90f;
-        float alterRot = entity.rotation;
+        float alterRot = entity.rot;
         float dRot = desired > alterRot ? SPEED : -SPEED;
         if (desired - alterRot > 180 )
             dRot = -SPEED;
         else if (desired - alterRot < -180 )
             dRot = SPEED;
 
-        entity.rotation += dRot;
+        entity.rot += dRot;
     }
 }

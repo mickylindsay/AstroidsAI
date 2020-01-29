@@ -1,9 +1,8 @@
 package com.demisardonic.astroids;
 
 import com.badlogic.gdx.Gdx;
-import com.demisardonic.astroids.behavior.CompositeBehavior;
-import com.demisardonic.astroids.behavior.FacingBehavior;
 import com.demisardonic.astroids.behavior.SeekBehavior;
+import com.demisardonic.astroids.behavior.decoration.FacingDecorator;
 import com.demisardonic.astroids.entity.Enemy;
 import com.demisardonic.astroids.entity.Entity;
 import com.demisardonic.astroids.entity.Player;

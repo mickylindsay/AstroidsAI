@@ -15,6 +15,8 @@ public class MainGame extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+		System.out.println(new Vector(1,0).rotate(Math.PI/4f));
+
 		AssetManager.instance().registerPath("default", "img/default.png");
 		AssetManager.instance().registerPath("entity.player", "img/player.png");
 		AssetManager.instance().registerPath("entity.enemy", "img/enemy.png");

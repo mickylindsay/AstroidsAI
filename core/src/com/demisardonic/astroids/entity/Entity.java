@@ -29,12 +29,13 @@ public abstract class Entity extends PhysicsObject implements Collideable {
         // Bound speed
         vel = vel.trunk(speed);
 
-        if (rotation >= 360f) rotation -= 360f;
-        if (rotation < 0f) rotation += 360f;
+        rot += rotVel * dt;
+        if (rot >= 360f) rot -= 360f;
+        if (rot < 0f) rot += 360f;
     }
 
     public void render(Renderer renderer, float dt){
-       renderer.renderSprite(texture, pos.x(), pos.y(), scale, rotation);
+       renderer.renderSprite(texture, pos.x(), pos.y(), scale, rot);
        if (MainGame.renderCollision)
            renderer.renderCircle(center().x(), center().y(), radius);
        if (MainGame.renderAcceleration)

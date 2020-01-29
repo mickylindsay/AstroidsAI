@@ -27,6 +27,19 @@ public class Vector {
         if (mag() > m) return nor(m);
         return this;
     }
+    public Vector rotate(double radians) {
+        return rotate((float) radians);
+    }
+    public Vector rotate(float radians) {
+        float s = (float) Math.sin(radians);
+        float c = (float) Math.cos(radians);
+        return new Vector(x*c + y*s, x*s + y*c);
+    }
+
+    public void zero(){
+        this.x = 0;
+        this.y = 0;
+    }
 
     public String toString() { return "x: " + x + ",y: " + y; }
 }

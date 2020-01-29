@@ -4,7 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.demisardonic.astroids.Collideable;
 import com.demisardonic.astroids.Renderer;
-import com.demisardonic.astroids.Weapon;
+import com.demisardonic.astroids.weapon.SpreadWeapon;
+import com.demisardonic.astroids.weapon.Weapon;
 
 public class Player extends Entity{
     private final float THRUST, ROTATION;
@@ -18,7 +19,7 @@ public class Player extends Entity{
         ROTATION = 3f;
         this.speed = 300;
         this.baseDrag = this.drag = 1f;
-        this.weapon = new Weapon();
+        this.weapon = new SpreadWeapon();
     }
 
     @Override
@@ -30,12 +31,12 @@ public class Player extends Entity{
         // moving
         this.drag = this.baseDrag;
         if (Gdx.input.isKeyPressed(Input.Keys.A))
-            rotation += ROTATION;
+            rot += ROTATION;
         if (Gdx.input.isKeyPressed(Input.Keys.D))
-            rotation -= ROTATION;
+            rot -= ROTATION;
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            float dx = (float) (THRUST * Math.cos(Math.toRadians(rotation + 90)));
-            float dy = (float) (THRUST * Math.sin(Math.toRadians(rotation + 90)));
+            float dx = (float) (THRUST * Math.cos(Math.toRadians(rot + 90)));
+            float dy = (float) (THRUST * Math.sin(Math.toRadians(rot + 90)));
             acc = acc.add(dx, dy);
             this.drag = 0.2f; // Less drag when accelerating
         }
@@ -56,7 +57,7 @@ public class Player extends Entity{
         for (int c = -1; c <= 1 ; c++) {
             for (int r = -1; r <= 1; r++) {
                 if (c == 0 && r == 0) continue;
-                renderer.renderSprite(texture, pos.x() + Gdx.graphics.getWidth()*c, pos.y()+ Gdx.graphics.getHeight()*r, scale, rotation);
+                renderer.renderSprite(texture, pos.x() + Gdx.graphics.getWidth()*c, pos.y()+ Gdx.graphics.getHeight()*r, scale, rot);
             }
         }
         super.render(renderer, dt);
